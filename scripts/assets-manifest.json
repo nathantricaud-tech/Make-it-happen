@@ -1,0 +1,52 @@
+[
+  {
+    "target": "public/pdf.worker.min.mjs",
+    "sha256": "9536359f1b8367850d485731ca1d5e45c159a7b7a0912325e539937aa21ceb18",
+    "package": "pdf",
+    "source": "build/pdf.worker.min.mjs"
+  },
+  {
+    "target": "public/ocr/worker.min.js",
+    "sha256": "576b7df7e3393e137e51849357c9adb53fe7ac1bb69bfa06cf3d61520f182c6d",
+    "package": "ocr",
+    "source": "dist/worker.min.js"
+  },
+  {
+    "target": "public/ocr/core/tesseract-core-lstm.wasm.js",
+    "sha256": "eef5f8b2f8e20e150680b20adaec4a60babafee3adbe8a94583c81fee46e8680",
+    "package": "core",
+    "source": "tesseract-core-lstm.wasm.js"
+  },
+  {
+    "target": "public/ocr/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+    "sha256": "861a536cf9ef8e63cb644d57bab39c388f37f7d6b6f60024b741c5f6b39a59b3",
+    "package": "core",
+    "source": "tesseract-core-relaxedsimd-lstm.wasm.js"
+  },
+  {
+    "target": "public/ocr/core/tesseract-core-simd-lstm.wasm.js",
+    "sha256": "c58b46a4c796c0b8afccf77591d5b875b6896b45d402bbce8caa6f5362447b38",
+    "package": "core",
+    "source": "tesseract-core-simd-lstm.wasm.js"
+  },
+  {
+    "target": "public/ocr/data/deu.traineddata.gz",
+    "sha256": "306c4280d0cbed46fbff727486bd43b92730181bae80f56941a091f363bdf28b",
+    "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/deu@1.0.0/4.0.0_best_int/deu.traineddata.gz"
+  },
+  {
+    "target": "public/ocr/data/eng.traineddata.gz",
+    "sha256": "45b4cb346724ac1774f1c36f42f182b887bcdb28ebe63e6fff90ac41f3fcff91",
+    "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/eng@1.0.0/4.0.0_best_int/eng.traineddata.gz"
+  },
+  {
+    "target": "public/ocr/data/fra.traineddata.gz",
+    "sha256": "d611139672b3752c7097e671e4a1d9209dfd37f2aeb081ef6487fba3351e9255",
+    "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/fra@1.0.0/4.0.0_best_int/fra.traineddata.gz"
+  },
+  {
+    "target": "public/ocr/data/spa.traineddata.gz",
+    "sha256": "40be52f97b5d4eb7460073dc1f94cd546b27150333c0bf854ed7e7132db6bceb",
+    "url": "https://cdn.jsdelivr.net/npm/@tesseract.js-data/spa@1.0.0/4.0.0_best_int/spa.traineddata.gz"
+  }
+]

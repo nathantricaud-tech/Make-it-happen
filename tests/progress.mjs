@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {progress,validHighlights,addHighlight} from '../lib/progress.ts';
+const today='2026-10-11';
+assert.equal(progress([],today).xp,0);
+assert.equal(progress([{id:'planned',kind:'session',date:today,minutes:40,planned:true},{id:'future',kind:'session',date:'2027-01-01',minutes:40}],today).xp,0);
+const rows=[{id:'a',kind:'session',date:today,minutes:90},{id:'b',kind:'session',date:today,minutes:90}];
+assert.equal(progress(rows,today).xp,120);assert.equal(progress(rows,today).minutes,180);assert.equal(progress(rows,today).rank,1);
+assert.equal(progress([{id:'e',kind:'course',example:true}],today).badges[0].unlocked,false);
+assert.equal(progress([{id:'q',kind:'attempt',score:0,total:0}],today).badges[5].unlocked,false);
+assert.equal(progress(['2026-10-09','2026-10-10','2026-10-11'].map((date,i)=>({id:String(i),kind:'session',date,minutes:5})),today).badges[3].unlocked,true);
+assert.equal(progress(['2026-10-08','2026-10-10','2026-10-11'].map((date,i)=>({id:String(i),kind:'session',date,minutes:5})),today).badges[3].unlocked,false);
+assert.deepEqual(validHighlights([{start:0,end:10,color:'yellow'},{start:2,end:3,color:'sage'},{start:4,end:5,color:'sage'},{start:10,end:11,color:'graphite'},{start:-1,end:5,color:'yellow'},{start:11,end:12,color:'bad'}],'Hello world!'),[{start:0,end:10,color:'yellow'},{start:10,end:11,color:'graphite'}]);
+assert.deepEqual(addHighlight([{start:0,end:5,color:'yellow'},{start:8,end:10,color:'sage'}],{start:2,end:6,color:'graphite'}),[{start:2,end:6,color:'graphite'},{start:8,end:10,color:'sage'}]);
+console.log('Progression : XP plafonnés, séances prévues/futures, rangs, séries, badges et surlignages vérifiés.');

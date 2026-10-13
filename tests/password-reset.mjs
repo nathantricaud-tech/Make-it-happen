@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {DatabaseSync} from 'node:sqlite';
+import {createRequire} from 'node:module';
+import ts from 'typescript';
+const require=createRequire(import.meta.url),sqlite=new DatabaseSync(':memory:');
+for(const file of fs.readdirSync('drizzle').filter(f=>f.endsWith('.sql')).sort())sqlite.exec(fs.readFileSync('drizzle/'+file,'utf8'));
+const db={prepare(sql){let args=[];return {bind(...v){args=v;return this},async first(){return sqlite.prepare(sql).get(...args)||null},async run(){return {meta:{changes:Number(sqlite.prepare(sql).run(...args).changes)}}}}},async batch(ss){sqlite.exec('BEGIN');try{const r=[];for(const s of ss)r.push(await s.run());sqlite.exec('COMMIT');return r}catch(e){sqlite.exec('ROLLBACK');throw e}}};
+function load(file,deps={}){const out={exports:{}};new Function('require','exports','module',ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText)(k=>deps[k]||require(k),out.exports,out);return out.exports}
+const auth=load('lib/email-auth.ts'),reset=load('lib/password-reset.ts',{'./email-auth':auth});
+const origin='https://example.test',env={RESEND_API_KEY:'fixture',MAIL_FROM:'Make it happen <test@example.test>',APP_ORIGIN:origin};let deliveries=[],ip=0;
+const sender=async(url,options)=>{deliveries.push(JSON.parse(options.body));return Response.json({id:'fixture'})};
+const call=(body,config=env,send=sender,supplied=origin)=>reset.handlePasswordReset(new Request(origin+'/api/auth/reset',{method:'POST',headers:{origin:supplied,'content-type':'application/json','cf-connecting-ip':'192.0.2.'+(++ip)},body:JSON.stringify(body)}),db,config,send);
+const old='Original secure password',fresh='New secure password phrase';
+sqlite.prepare('INSERT INTO email_accounts VALUES(?,?,?,?,?,?,?)').run('a','u','alice@example.test','Alice',await auth.hashPassword(old),'0'.repeat(64),0);
+sqlite.prepare('INSERT INTO email_sessions VALUES(?,?,?)').run('s','a',9999999999);
+assert.equal((await call({action:'request',email:'alice@example.test'},{})).status,503);
+assert.equal((await call({action:'request',email:'alice@example.test'},env,sender,'https://evil.test')).status,403);
+const known=await (await call({action:'request',email:'alice@example.test',lang:'en'})).json();const unknown=await (await call({action:'request',email:'absent@example.test'})).json();assert.deepEqual(known,unknown);assert.equal(deliveries.length,1);
+const token=deliveries[0].text.match(/token=([a-f0-9]{64})/)[1];assert.ok(deliveries[0].subject.includes('Reset'));assert.equal(sqlite.prepare('SELECT token_hash FROM password_resets').get().token_hash,auth.digest(token));
+let r=await call({action:'reset',token,password:fresh});assert.equal(r.status,200);assert.match((await r.json()).recoveryCode,/^[a-f0-9]{64}$/);assert.equal(sqlite.prepare('SELECT count(*) n FROM email_sessions').get().n,0);assert.ok(await auth.verifyPassword(fresh,sqlite.prepare('SELECT password_hash FROM email_accounts').get().password_hash));assert.equal((await call({action:'reset',token,password:old})).status,400);
+await call({action:'request',email:'alice@example.test'});const expired=deliveries.at(-1).text.match(/token=([a-f0-9]{64})/)[1];sqlite.prepare('UPDATE password_resets SET expires=0').run();assert.equal((await call({action:'reset',token:expired,password:old})).status,400);
+await call({action:'request',email:'alice@example.test'});const stale=deliveries.at(-1).text.match(/token=([a-f0-9]{64})/)[1];sqlite.prepare('UPDATE email_accounts SET password_hash=?').run(await auth.hashPassword(old));assert.equal((await call({action:'reset',token:stale,password:fresh})).status,400);
+assert.equal((await call({action:'request',email:'alice@example.test'})).status,429);
+console.log('Passed: configured delivery, CSRF, generic account response, localized email, hashed token, expiry, one-use reset, session revocation, old-password invalidation, rate limiting.');

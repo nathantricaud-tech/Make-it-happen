@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {DOMParser} from '@xmldom/xmldom';
+import {zipSync,strToU8} from 'fflate';
+import {extractOffice} from '../lib/office-import.ts';
+import ts from 'typescript';
+import fs from 'node:fs';
+const scanExports={};new Function('require','exports',ts.transpileModule(fs.readFileSync('lib/scan-course.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText)(name=>name==='./course-image'?{prepareCourseImage:async f=>f}:{MAX_COURSE_FILE:50*1024*1024,MAX_PDF_PAGES:150,MAX_COURSE_TEXT:500000},scanExports);const {scanType}=scanExports;
+import {parseArtifact,outputFormat} from '../lib/ai-formats.ts';
+globalThis.DOMParser=DOMParser;
+const bytes=zipSync({'word/document.xml':strToU8('<w:document xmlns:w="word"><w:t>La dilution</w:t><w:t>Concentration</w:t></w:document>'),'ppt/slides/slide2.xml':strToU8('<a:p xmlns:a="drawing"><a:t>Deuxième diapositive</a:t></a:p>'),'word/charts/chart1.xml':strToU8('<c:chart xmlns:c="chart"><c:v>12</c:v><c:v>24</c:v></c:chart>'),'other.xml':strToU8('<t>Ignored</t>')});const text=extractOffice(bytes);assert.match(text,/La dilution/);assert.match(text,/Deuxième/);assert.match(text,/12, 24/);assert.ok(!text.includes('Ignored'));
+assert.ok(scanType({name:'course.docx',type:''}).includes('wordprocessingml'));assert.ok(scanType({name:'slides.pptx',type:''}).includes('presentationml'));
+const exam={title:'Exam',instructions:'Answer fully',duration:60,questions:Array.from({length:5},()=>({question:'Explain conservation',points:4,answer:'Detailed reasoning'}))};assert.equal(parseArtifact('exam',JSON.stringify(exam)).questions.length,5);assert.equal(outputFormat('exam','openai/gpt-oss-20b').response_format.json_schema.name,'exam');assert.throws(()=>parseArtifact('exam','{"questions":[]}'),/AI_FORMAT/);
+console.log('Passed: DOCX/PPTX ZIP/XML text and chart data extraction, supported formats, open-question exam schema.');

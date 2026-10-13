@@ -1,0 +1,21 @@
+import {languageTopics} from '@/lib/language-topics';
+import {languageRule,languageMismatch} from '@/lib/learning-generation';
+import {identity,runtimeEnv,json,failure,reserve} from '@/lib/server';
+import {z} from 'zod';
+import {chatHistory} from '@/lib/ai-formats';
+const schema=z.object({reply:z.string().min(1),correction:z.string()});
+export async function POST(req:Request){let refund:(()=>Promise<void>)|undefined;try{
+ const u=await identity(req),env=runtimeEnv();if(!env.GROQ_API_KEY)throw new Error('AI_UNAVAILABLE');
+ const form=await req.formData(),lang=String(form.get('lang')),level=String(form.get('level')),scenarioKey=String(form.get('scenario')),ui=String(form.get('ui'));
+ const scenario=languageTopics[scenarioKey as keyof typeof languageTopics];if(!scenario)throw new Error('INVALID');
+ if(!['fr','en','de','es'].includes(lang)||!['A1','A2','B1','B2','C1'].includes(level)||!['fr','en','de','es'].includes(ui))throw new Error('INVALID');
+ const historyRaw=String(form.get('history')||'[]');if(historyRaw.length>18000)throw new Error('INVALID');let history;try{history=chatHistory('chat',JSON.parse(historyRaw));}catch{throw new Error('INVALID')}
+ let transcript=String(form.get('text')||'').trim();const audio=form.get('audio');if(transcript.length>2000)throw new Error('INVALID');
+ if(audio!==null&&(!(audio instanceof File)||audio.size===0||audio.size>6*1024*1024||!['audio/webm','audio/mp4','audio/ogg','audio/wav','audio/mpeg','audio/x-m4a','audio/m4a','audio/x-wav'].includes(audio.type.split(';')[0])))throw new Error('INVALID');
+ if(!audio&&!transcript)throw new Error('INVALID');refund=await reserve(u.userId);
+ const check=(r:Response)=>{if(!r.ok)throw new Error(r.status===429?'AI_RATE_LIMIT':r.status===401||r.status===403?'AI_KEY_INVALID':'AI_ERROR')};
+ if(audio instanceof File){const p=new FormData();p.set('file',audio);p.set('language',lang);p.set('model','whisper-large-v3-turbo');const r=await fetch('https://api.groq.com/openai/v1/audio/transcriptions',{method:'POST',headers:{Authorization:`Bearer ${env.GROQ_API_KEY}`},body:p,signal:AbortSignal.timeout(40000)});check(r);const d:any=await r.json();transcript=typeof d.text==='string'?d.text.trim().slice(0,2000):'';if(!transcript)throw new Error('AUDIO_EMPTY');}
+ const model=env.GROQ_MODEL||'openai/gpt-oss-20b';
+ const format=model.startsWith('openai/gpt-oss-')?{type:'json_schema',json_schema:{name:'language_reply',strict:true,schema:{type:'object',properties:{reply:{type:'string'},correction:{type:'string'}},required:['reply','correction'],additionalProperties:false}}}:{type:'json_object'};
+ const generate=async(repair=false)=>{const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{Authorization:`Bearer ${env.GROQ_API_KEY}`,'Content-Type':'application/json'},body:JSON.stringify({model,messages:[{role:'system',content:`You are a friendly language conversation partner. ${languageRule(lang as any)} Apply this output rule to reply only. Speak ONLY ${lang} in reply, at CEFR ${level}. Scenario: ${scenario}. Reply naturally in 2-4 short sentences, under 100 words, and end with one question to continue. In correction, explain at most one important grammar or vocabulary correction in ${ui} ONLY, clearly separate from the reply; never mix two languages inside a field, or use empty string if none. ${repair?'Rewrite your answer in the exact required languages.':''} You receive a transcript, not the user's voice: NEVER evaluate pronunciation or accent. Return JSON {reply,correction}.`},...history,{role:'user',content:transcript}],response_format:format,max_completion_tokens:1800,...(model.startsWith('openai/gpt-oss-')?{reasoning_effort:'low'}:{})}),signal:AbortSignal.timeout(40000)});check(r);const d:any=await r.json();let result;try{result=schema.parse(JSON.parse(d.choices?.[0]?.message?.content))}catch{throw new Error('AI_FORMAT')}return result;};let result=await generate();if(languageMismatch(result.reply,lang as any)||languageMismatch(result.correction,ui as any)){result=await generate(true);if(languageMismatch(result.reply,lang as any)||languageMismatch(result.correction,ui as any))throw new Error('AI_FORMAT')}return json({transcript,...result});
+ }catch(e){if(refund)await refund().catch(()=>{});return failure(e)}}

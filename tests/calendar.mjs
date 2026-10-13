@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {stats,monthCells,validDay,shiftDate} from '../lib/calendar.ts';
+assert.equal(monthCells(2024,1).filter(Boolean).length,29);
+assert.equal(monthCells(2025,1).filter(Boolean).length,28);
+assert.equal(shiftDate('2026-01-01',-1),'2025-12-31');
+assert.equal(validDay('2026-02-30'),false);
+assert.equal(validDay('2024-02-29'),true);
+const sessions=[{id:'1',date:'2026-10-09',minutes:25,subject:'Maths',mode:'manual',planned:false},{id:'2',date:'2026-10-10',minutes:20,subject:'Maths',mode:'manual',planned:false},{id:'3',date:'2026-10-11',minutes:30,subject:'Maths',mode:'manual',planned:true}];
+assert.deepEqual(stats(sessions,'2026-10-11'),{streak:2,days:2,minutes:45,weekMinutes:45});
+sessions.push({...sessions[0],id:'4',date:'2026-10-10'});
+assert.equal(stats(sessions,'2026-10-11').streak,2);
+assert.equal(stats(sessions,'2026-10-13').streak,0);
+console.log('Calendar: 8 checks passed');

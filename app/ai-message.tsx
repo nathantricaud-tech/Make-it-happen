@@ -1,0 +1,7 @@
+import React from 'react';
+import katex from 'katex';
+import {messageParts} from '@/lib/message-format';
+function math(text:string,display:boolean){try{return katex.renderToString(text.slice(0,5000),{displayMode:display,throwOnError:true,trust:false,strict:'ignore',maxSize:8,maxExpand:300,output:'htmlAndMathml'})}catch{return null}}
+function emphasis(text:string){return text.split(/(\*\*[^*\n]+\*\*)/g).map((part,i)=>part.startsWith('**')&&part.endsWith('**')?<strong key={i}>{part.slice(2,-2)}</strong>:part);}
+function Text({value,inline}:{value:string;inline:boolean}){if(inline)return <>{emphasis(value)}</>;return <>{value.split(/\n{2,}/).filter(Boolean).map((block,i)=>{if(/^#{1,4} /.test(block.trim()))return <div className="message-heading" key={i}>{emphasis(block.replace(/^#{1,4} /,''))}</div>;return <div className="message-paragraph" key={i}>{emphasis(block)}</div>})}</>}
+export function AIMessage({content,inline=false}:{content:string;inline?:boolean}){const Tag=inline?'span':'div';return <Tag className={'ai-message '+(inline?'inline':'')}>{messageParts(content).map((part,i)=>{if(part.kind==='math'){const html=math(part.text,!!part.display);return html?<span className={'formula '+(part.display?'formula-block':'')} key={i} dangerouslySetInnerHTML={{__html:html}}/>:<code className="formula-fallback" key={i}>{part.text}</code>;}if(part.kind==='code')return part.display?<pre key={i}><code>{part.text}</code></pre>:<code key={i}>{part.text}</code>;return <Text key={i} value={part.text} inline={inline}/>;})}</Tag>}
