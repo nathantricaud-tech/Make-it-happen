@@ -1,3 +1,4 @@
+export const maxDuration=120;
 import {studyPrompt,languageRule,languageMismatch,courseContext} from '@/lib/learning-generation';
 import {identity,runtimeEnv,json,failure,str,id,reserve} from '@/lib/server';
 import {requestSchema,chatHistory,outputFormat,parseArtifact} from '@/lib/ai-formats';

@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import ts from 'typescript';
+import {createClient} from '@libsql/client';
+const out={exports:{}};
+new Function('require','exports','module',ts.transpileModule(fs.readFileSync('lib/database.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText)(n=>n==='@libsql/client/web'?{createClient}:JSON.parse(fs.readFileSync('lib/database-schema.json')),out.exports,out);
+const client=createClient({url:'file::memory:'}),db=new out.exports.AppDatabase(client);
+await Promise.all([db.prepare('SELECT 1').first(),db.prepare('SELECT 1').first()]);
+await db.prepare('INSERT INTO records VALUES(?,?,?,?,?)').bind('one','alice','course','{}','today').run();
+assert.equal((await db.prepare('SELECT owner FROM records WHERE id=?').bind('one').first()).owner,'alice');
+assert.equal(await db.prepare('SELECT * FROM records WHERE owner=?').bind('bob').first(),null);
+await assert.rejects(db.batch([db.prepare('INSERT INTO records VALUES(?,?,?,?,?)').bind('two','alice','course','{}','today'),db.prepare('INSERT INTO records VALUES(?,?,?,?,?)').bind('one','bob','course','{}','today')]));
+assert.equal(await db.prepare('SELECT * FROM records WHERE id=?').bind('two').first(),null,'transaction rolls back all changes');
+assert.equal((await db.prepare('DELETE FROM records WHERE id=?').bind('one').run()).meta.changes,1);
+client.close();console.log('Passed: real libSQL bootstrap, binding, owner isolation, rollback and affected-row counts.');

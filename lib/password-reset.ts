@@ -1,3 +1,4 @@
+import type {AppDatabase} from './database';
 import {randomBytes} from 'node:crypto';
 import {digest,hashPassword,normalizeEmail,validatePassword} from './email-auth';
 export type MailConfig={RESEND_API_KEY?:string;MAIL_FROM?:string;APP_ORIGIN?:string};
@@ -9,7 +10,7 @@ const messages={
  es:['Restablece tu contraseña','Has solicitado restablecer tu contraseña de Make it happen.','Elegir nueva contraseña','Este enlace caduca en 20 minutos y solo puede usarse una vez. Si no lo solicitaste, ignora este correo.']
 };
 const escape=(s:string)=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
-export async function handlePasswordReset(req:Request,db:D1Database,env:MailConfig,send:typeof fetch=fetch){
+export async function handlePasswordReset(req:Request,db:AppDatabase,env:MailConfig,send:typeof fetch=fetch){
  const reply=(body:unknown,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'no-store','Referrer-Policy':'no-referrer'}});
  try{
   if(req.headers.get('origin')!==new URL(req.url).origin)return reply({error:'AUTH_FORBIDDEN'},403);
@@ -17,7 +18,7 @@ export async function handlePasswordReset(req:Request,db:D1Database,env:MailConf
   const raw=await req.text();if(raw.length>4096)return reply({error:'AUTH_INVALID'},400);const b=JSON.parse(raw),now=Math.floor(Date.now()/1000);
   if(!['request','reset'].includes(b.action))return reply({error:'AUTH_INVALID'},400);
   const throttle=async(key:string,limit:number)=>{const row=await db.prepare('INSERT INTO auth_attempts(key,window,count) VALUES(?,?,1) ON CONFLICT(key,window) DO UPDATE SET count=count+1 WHERE count<? RETURNING count').bind(digest('reset:'+key),Math.floor(now/900)*900,limit).first();if(!row)throw Error('AUTH_LIMIT')};
-  await throttle(req.headers.get('cf-connecting-ip')||'unknown',20);
+  await throttle(req.headers.get('x-vercel-forwarded-for')||'unknown',20);
   await db.prepare('DELETE FROM password_resets WHERE expires<=?').bind(now).run();
   if(b.action==='request'){
    if(!resetConfigured(env))return reply({error:'MAIL_UNAVAILABLE'},503);

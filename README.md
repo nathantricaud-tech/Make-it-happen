@@ -1,62 +1,52 @@
-# Make it happen — déploiement indépendant
+# Make it happen — Vercel
 
-Le code appartient au titulaire du dépôt. GitHub conserve le code et son historique ; Cloudflare exécute le site, sa base D1 et les fichiers R2. La connexion des élèves utilise un email et un mot de passe. Aucune connexion ChatGPT n'est requise dans cet export.
+Application d'étude gratuite : Next.js, connexion e-mail/mot de passe, Turso (SQLite/libSQL) et stockage Vercel Blob **privé**. Aucune connexion ChatGPT, aucun paiement Stripe, aucun quota quotidien d'IA dans l'application.
 
-## État actuel
+## Déploiement sur ton compte Vercel
 
-Le lancement public reste à effectuer. Le site est entièrement gratuit pour les élèves. Aucun abonnement, paiement ou compte Stripe n’est nécessaire. Le service d'emails n'est pas encore configuré. Aucun compte Cloudflare indépendant n'est connecté.
+1. Importe `nathantricaud-tech/Make-it-happen` dans Vercel (ou conserve le projet déjà lié à ce dépôt).
+2. Dans **Settings → Build and Deployment**, choisis **Next.js**, racine `./`. Supprime les anciennes commandes Cloudflare et les éventuelles surcharges du dossier de sortie. Build : `pnpm build` ; installation : `pnpm install --frozen-lockfile` ; sortie : valeur par défaut de Next.js. Node.js 22.x.
+3. Crée une base **Turso compatible libSQL**, puis copie son URL et son jeton dans les variables Vercel ci-dessous. Le schéma initial est créé automatiquement au premier accès, sans données de démonstration. L'ancien Site et ses données ne sont pas transférés automatiquement.
+4. Dans **Storage**, crée un **Blob store privé** et connecte-le au projet. Vercel ajoute `BLOB_READ_WRITE_TOKEN`. Ne choisis pas un store public.
+5. Ajoute les variables serveur ci-dessous en Production, puis redéploie. Pour les previews, utilise de préférence une base et un store séparés.
 
-## 1. Garder la main sur le code
+| Variable | Utilité |
+| --- | --- |
+| `TURSO_DATABASE_URL` | URL libSQL de ta base |
+| `TURSO_AUTH_TOKEN` | Jeton d'accès à cette base |
+| `BLOB_READ_WRITE_TOKEN` | Ajouté par la connexion du store Blob privé |
+| `GROQ_API_KEY` | Clé de ton fournisseur IA Groq |
+| `GROQ_MODEL` | Facultatif : modèle texte |
+| `GROQ_VISION_MODEL` | Facultatif : modèle acceptant les images |
+| `RESEND_API_KEY` | Envoi des messages de récupération de mot de passe |
+| `MAIL_FROM` | `Make it happen <bonjour@ton-domaine.fr>`, domaine vérifié chez Resend |
+| `APP_ORIGIN` | URL finale HTTPS du site, sans slash final |
 
-Dépôt choisi par le propriétaire : `nathantricaud-tech/Make-it-happen`. Le code est importé à la racine. Garder les accès propriétaire aux comptes GitHub, Cloudflare, Stripe, fournisseur email et domaine. Le dépôt est actuellement public : son code est visible, jamais ses secrets ni les données des élèves. Tu peux le rendre privé dans GitHub si tu le souhaites.
+Aucun secret dans GitHub, dans une variable `NEXT_PUBLIC_*` ou dans une conversation. Les clés de l'ancien hébergement ne sont pas copiées. La compilation fonctionne sans secrets ; les fonctions nécessitant un fournisseur restent indisponibles jusqu'à sa configuration.
 
-## 2. Hébergement
+## Vérification avant ouverture aux élèves
 
-Dans son propre compte Cloudflare, créer une base D1 `make-it-happen` et un bucket R2 `make-it-happen-files` privé. Activer Workers et choisir un sous-domaine workers.dev ou un domaine personnel. Les consommations IA, stockage, email et hébergement peuvent être facturées suivant les offres choisies.
+Sur le domaine final HTTPS : crée un compte avec un mot de passe d'au moins 12 caractères, déconnecte-toi puis reconnecte-toi. Demande un e-mail « mot de passe oublié », ouvre le lien reçu, change le mot de passe et vérifie que l'ancien ne fonctionne plus. Les liens expirent après 20 minutes ; les sessions précédentes sont révoquées. Sans configuration Resend complète, aucun e-mail réel ne peut partir.
 
-Dans GitHub, créer l'environnement `production` (Settings > Environments), puis y définir :
+Importe un PDF de plus de 4,5 Mo, affiche-le, supprime-le ; vérifie aussi une image, une fiche IA et un enregistrement vocal. Les pièces jointes vont directement du navigateur au store privé, sans traverser le corps d'une Function Vercel. Les téléchargements utilisent des liens signés valables cinq minutes après contrôle du compte propriétaire. Les réservations d'import interrompues sont nettoyées lors d'un prochain import du même compte (après expiration et délai de sécurité).
 
-| Type | Nom | Valeur |
-| --- | --- | --- |
-| Secret | CLOUDFLARE_API_TOKEN | Jeton limité à Workers Scripts Edit, D1 Edit et R2 Edit sur le compte choisi |
-| Secret | CLOUDFLARE_ACCOUNT_ID | Identifiant du compte Cloudflare |
-| Variable | CLOUDFLARE_D1_ID | Identifiant de la nouvelle base D1 |
-| Variable | CLOUDFLARE_R2_BUCKET | Nom du bucket R2 |
-| Variable | APP_ORIGIN | Origine finale HTTPS sans slash final |
+## Gratuité et limites techniques
 
-Sans configuration Cloudflare, le workflow vérifie seulement le code et ne publie rien. Une fois configuré, il configure les ressources, vérifie TypeScript et l'authentification, compile, applique les migrations et déploie. Chaque mise à jour de `main` déclenche ensuite un nouveau déploiement. Faire les changements sur une branche et les fusionner après validation. Une version antérieure du code peut être redéployée ; ne pas annuler automatiquement une migration de données.
+Le site est gratuit pour les élèves, sans abonnement ni code propriétaire. Limites techniques : 50 Mio par fichier, 150 pages PDF, 500 000 caractères de cours et 1 Gio de pièces jointes par compte. Les traitements vocaux et visuels ont leurs propres limites. Les quotas et coûts des fournisseurs Vercel, Turso, Groq et Resend restent à la charge du propriétaire ; gratuit pour les élèves ne signifie pas infrastructure illimitée gratuite.
 
-## 3. Secrets du serveur
+## Tu gardes la main
 
-Dans Cloudflare Worker > Settings > Variables and Secrets, définir directement :
+Le dépôt et le projet Vercel restent dans tes comptes. Chaque mise à jour de `main` est redéployée par l'intégration Git de Vercel. Les branches permettent de tester les changements avant fusion. GitHub Actions vérifie le code ; il n'utilise pas de secrets de production. Sauvegarde la base avant toute future migration destructive ; un retour arrière de code ne restaure pas les données.
 
-- `GROQ_API_KEY` : clé IA de ton compte ; éventuellement `GROQ_MODEL` et `GROQ_VISION_MODEL`.
-- `RESEND_API_KEY` : clé Resend limitée à l'envoi pour le domaine vérifié.
-- `MAIL_FROM` : `Make it happen <bonjour@ton-domaine.fr>` après vérification DNS du domaine.
-- `APP_ORIGIN` : origine finale HTTPS sans slash (également variable GitHub).
+## Développement
 
-Ne jamais placer une clé dans le code, une variable NEXT_PUBLIC, une issue GitHub ou une conversation. Les secrets du Site actuel ne sont pas copiés dans l'export.
+Node.js 22.13+ et pnpm 11.25.0. Place les variables serveur dans `.env.local` (ignoré par Git).
 
-## 4. Accès gratuit
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
+pnpm typecheck
+pnpm build
+```
 
-Toutes les fonctionnalités sont gratuites. Il n’y a ni paiement, ni code propriétaire, ni quota quotidien d’IA imposé par le site. Les limites techniques des fichiers, du stockage (1 Go par compte) et du fournisseur IA restent applicables. Les coûts éventuels de fonctionnement sont supportés par le propriétaire.
-
-## 5. Emails de récupération
-
-Vérifier le domaine expéditeur chez Resend (DNS). Le lien est aléatoire, seule son empreinte est stockée, expiration 20 minutes, utilisation unique. Il arrive sur `/reset-password` avec le jeton dans le fragment (pas dans les journaux HTTP). Les anciennes sessions et les anciens liens sont invalidés après changement. Le code de secours reste disponible.
-
-Tester avec une adresse que tu contrôles : réception, lien expiré, seconde utilisation refusée et reconnexion avec le nouveau mot de passe. Les réponses ne révèlent pas si une adresse possède un compte. Les erreurs de livraison produisent un événement serveur générique `PASSWORD_RESET_DELIVERY_FAILED` sans adresse ni jeton. Les adresses ne sont pas vérifiées lors de l'inscription ; la réception d'un lien prouve le contrôle de la boîte pour la récupération.
-
-## 6. Données existantes et accès propriétaire
-
-Cet export contient **le code uniquement**, sans utilisateurs, mots de passe, cours, fichiers, abonnements ou secrets. La nouvelle base démarre vide. Pour conserver les comptes et cours existants, il faudra réaliser une migration privée de D1 et R2 en préservant les identifiants utilisateur et les droits du propriétaire ; ce transfert n'a pas encore été effectué. Ne pas supprimer l'ancien Site avant vérification de la migration. Le code d'accès illimité est lié au premier compte propriétaire qui le réclame : ne pas le partager.
-
-## 7. Validation avant annonce
-
-Vérifier sur téléphone et PC : inscription, récupération email, import et suppression de cours, génération IA, absence de paywall. Ajouter les informations réelles de l'éditeur, conditions de l'abonnement, confidentialité et contact d'assistance avant d'accueillir des clients. Le Site privé actuel reste disponible pendant cette préparation.
-
-## Développement local
-
-Node 22.13+ et pnpm (version du package.json). `pnpm install --frozen-lockfile`, `pnpm dev`, `pnpm build`. Le fichier wrangler contient initialement un identifiant D1 de substitution : `scripts/configure-deployment.mjs` exige un identifiant réel avant déploiement.
-
-Les ressources lourdes OCR et PDF sont reconstruites au build depuis les dépendances verrouillées et les données linguistiques officielles, avec vérification SHA-256. Elles ne sont pas stockées dans GitHub.
+Le build prépare les fichiers OCR/PDF depuis les dépendances verrouillées et les données linguistiques officielles, avec contrôle SHA-256. Il nécessite un accès réseau aux données OCR lors du premier build. La base est initialisée paresseusement : ne configure jamais de base de production pour les tests locaux.

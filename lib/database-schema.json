@@ -1,0 +1,21 @@
+[
+  "CREATE TABLE IF NOT EXISTS `friends` (\n\t`owner` text NOT NULL,\n\t`peer` text NOT NULL,\n\t`status` text NOT NULL,\n\tPRIMARY KEY(`owner`, `peer`)\n)",
+  "CREATE TABLE IF NOT EXISTS `groups` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`owner` text NOT NULL,\n\t`name` text NOT NULL,\n\t`code` text NOT NULL\n)",
+  "CREATE UNIQUE INDEX IF NOT EXISTS `groups_code_unique` ON `groups` (`code`)",
+  "CREATE TABLE IF NOT EXISTS `members` (\n\t`group_id` text NOT NULL,\n\t`user_id` text NOT NULL,\n\tPRIMARY KEY(`group_id`, `user_id`)\n)",
+  "CREATE TABLE IF NOT EXISTS `messages` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`group_id` text NOT NULL,\n\t`owner` text NOT NULL,\n\t`body` text NOT NULL,\n\t`created` text NOT NULL\n)",
+  "CREATE TABLE IF NOT EXISTS `profiles` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`name` text NOT NULL,\n\t`code` text NOT NULL\n)",
+  "CREATE UNIQUE INDEX IF NOT EXISTS `profiles_code_unique` ON `profiles` (`code`)",
+  "CREATE TABLE IF NOT EXISTS `records` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`owner` text NOT NULL,\n\t`kind` text NOT NULL,\n\t`payload` text NOT NULL,\n\t`created` text NOT NULL\n)",
+  "CREATE INDEX IF NOT EXISTS `records_owner` ON `records` (`owner`,`kind`)",
+  "CREATE TABLE IF NOT EXISTS `usage` (\n\t`owner` text NOT NULL,\n\t`day` text NOT NULL,\n\t`count` integer NOT NULL,\n\tPRIMARY KEY(`owner`, `day`)\n)",
+  "CREATE TABLE IF NOT EXISTS `auth_attempts` (\n\t`key` text NOT NULL,\n\t`window` integer NOT NULL,\n\t`count` integer NOT NULL,\n\tPRIMARY KEY(`key`, `window`)\n)",
+  "CREATE TABLE IF NOT EXISTS `email_accounts` (\n\t`id` text PRIMARY KEY NOT NULL,\n\t`user_id` text NOT NULL,\n\t`email` text NOT NULL,\n\t`name` text NOT NULL,\n\t`password_hash` text NOT NULL,\n\t`recovery_hash` text,\n\t`created` integer NOT NULL\n)",
+  "CREATE UNIQUE INDEX IF NOT EXISTS `email_accounts_user_id_unique` ON `email_accounts` (`user_id`)",
+  "CREATE UNIQUE INDEX IF NOT EXISTS `email_accounts_email_unique` ON `email_accounts` (`email`)",
+  "CREATE TABLE IF NOT EXISTS `email_sessions` (\n\t`token_hash` text PRIMARY KEY NOT NULL,\n\t`account_id` text NOT NULL,\n\t`expires` integer NOT NULL,\n\tFOREIGN KEY (`account_id`) REFERENCES `email_accounts`(`id`) ON UPDATE no action ON DELETE no action\n)",
+  "CREATE INDEX IF NOT EXISTS `email_sessions_account` ON `email_sessions` (`account_id`)",
+  "CREATE TABLE IF NOT EXISTS `password_resets` (\n\t`token_hash` text PRIMARY KEY NOT NULL,\n\t`account_id` text NOT NULL,\n\t`password_snapshot` text NOT NULL,\n\t`expires` integer NOT NULL,\n\tFOREIGN KEY (`account_id`) REFERENCES `email_accounts`(`id`) ON UPDATE no action ON DELETE no action\n)",
+  "CREATE INDEX IF NOT EXISTS `password_resets_account` ON `password_resets` (`account_id`)",
+  "CREATE TABLE IF NOT EXISTS uploads (id TEXT PRIMARY KEY, owner TEXT NOT NULL, pathname TEXT NOT NULL, name TEXT NOT NULL, type TEXT NOT NULL, size INTEGER NOT NULL, expires INTEGER NOT NULL)"
+]

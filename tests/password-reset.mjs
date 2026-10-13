@@ -10,7 +10,7 @@ function load(file,deps={}){const out={exports:{}};new Function('require','expor
 const auth=load('lib/email-auth.ts'),reset=load('lib/password-reset.ts',{'./email-auth':auth});
 const origin='https://example.test',env={RESEND_API_KEY:'fixture',MAIL_FROM:'Make it happen <test@example.test>',APP_ORIGIN:origin};let deliveries=[],ip=0;
 const sender=async(url,options)=>{deliveries.push(JSON.parse(options.body));return Response.json({id:'fixture'})};
-const call=(body,config=env,send=sender,supplied=origin)=>reset.handlePasswordReset(new Request(origin+'/api/auth/reset',{method:'POST',headers:{origin:supplied,'content-type':'application/json','cf-connecting-ip':'192.0.2.'+(++ip)},body:JSON.stringify(body)}),db,config,send);
+const call=(body,config=env,send=sender,supplied=origin)=>reset.handlePasswordReset(new Request(origin+'/api/auth/reset',{method:'POST',headers:{origin:supplied,'content-type':'application/json','x-vercel-forwarded-for':'192.0.2.'+(++ip)},body:JSON.stringify(body)}),db,config,send);
 const old='Original secure password',fresh='New secure password phrase';
 sqlite.prepare('INSERT INTO email_accounts VALUES(?,?,?,?,?,?,?)').run('a','u','alice@example.test','Alice',await auth.hashPassword(old),'0'.repeat(64),0);
 sqlite.prepare('INSERT INTO email_sessions VALUES(?,?,?)').run('s','a',9999999999);

@@ -1,3 +1,5 @@
+import {consumeUpload,uploadTypes} from '@/lib/uploads';
+export const maxDuration=120;
 import {languageTopics} from '@/lib/language-topics';
 import {languageRule,languageMismatch} from '@/lib/learning-generation';
 import {identity,runtimeEnv,json,failure,reserve} from '@/lib/server';
@@ -10,7 +12,7 @@ export async function POST(req:Request){let refund:(()=>Promise<void>)|undefined
  const scenario=languageTopics[scenarioKey as keyof typeof languageTopics];if(!scenario)throw new Error('INVALID');
  if(!['fr','en','de','es'].includes(lang)||!['A1','A2','B1','B2','C1'].includes(level)||!['fr','en','de','es'].includes(ui))throw new Error('INVALID');
  const historyRaw=String(form.get('history')||'[]');if(historyRaw.length>18000)throw new Error('INVALID');let history;try{history=chatHistory('chat',JSON.parse(historyRaw));}catch{throw new Error('INVALID')}
- let transcript=String(form.get('text')||'').trim();const audio=form.get('audio');if(transcript.length>2000)throw new Error('INVALID');
+ let transcript=String(form.get('text')||'').trim();const audio=await consumeUpload(form,'audio',u.userId,6*1024*1024,uploadTypes.filter(t=>t.startsWith('audio/')));if(transcript.length>2000)throw new Error('INVALID');
  if(audio!==null&&(!(audio instanceof File)||audio.size===0||audio.size>6*1024*1024||!['audio/webm','audio/mp4','audio/ogg','audio/wav','audio/mpeg','audio/x-m4a','audio/m4a','audio/x-wav'].includes(audio.type.split(';')[0])))throw new Error('INVALID');
  if(!audio&&!transcript)throw new Error('INVALID');refund=await reserve(u.userId);
  const check=(r:Response)=>{if(!r.ok)throw new Error(r.status===429?'AI_RATE_LIMIT':r.status===401||r.status===403?'AI_KEY_INVALID':'AI_ERROR')};
