@@ -15,4 +15,17 @@ export function studyPrompt(mode:string,lang:Lang,custom=''){
  return (mode==='chat'?custom:(prompts[mode]||''))+'\n'+(mode==='sheet'?`Required language code: ${lang}.\n`:'')+(mode==='exam'&&custom?'Exam preferences: '+custom+'\n':'')+common;
 }
 
-export function courseContext(text:string,max=60000){if(text.length<=max)return text;const parts=10,size=Math.floor((max-1000)/parts);return '[Selected excerpts across the course; this is not the complete document. Do not claim complete coverage.]\n'+Array.from({length:parts},(_,i)=>{const start=Math.floor(i*(text.length-size)/(parts-1));return `[Excerpt ${i+1}/${parts}]\n`+text.slice(start,start+size)}).join('\n\n');}
+// Select bounded, distributed excerpts; never imply that every page was read.
+export function courseContext(text:string,max=8000){
+ const clean=text.replace(/\r\n/g,'\n').replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim();
+ if(clean.length<=max)return clean;
+ const notice='[Selected excerpts distributed across the course, NOT the complete document. Cover the supported concepts only; do not claim exhaustive coverage.]\n';
+ const count=8,size=Math.max(1,Math.floor((max-notice.length-240)/count));
+ const excerpts=Array.from({length:count},(_,i)=>{
+  const position=Math.floor(i*(clean.length-size)/(count-1));
+  const boundary=i?clean.indexOf('\n',position):-1;
+  const start=boundary>=position&&boundary<position+150?boundary+1:position;
+  return `[Excerpt ${i+1}/${count}]\n`+clean.slice(start,start+size);
+ });
+ return (notice+excerpts.join('\n\n')).slice(0,max);
+}

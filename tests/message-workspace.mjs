@@ -15,3 +15,11 @@ const html=renderToStaticMarkup(React.createElement(AIMessage,{content:'$$\\frac
 const unsafe=renderToStaticMarkup(React.createElement(AIMessage,{content:'$\\href{javascript:alert(1)}{bad}$'}));assert.ok(!unsafe.includes('href="javascript:'));
 const {StudyWorkspace,clampSplit}=compile(new URL('../app/study-workspace.tsx',import.meta.url),{'@/lib/i18n':{translate:(_,k)=>k}});assert.equal(clampSplit(-10),25);assert.equal(clampSplit(99),65);const workspace=renderToStaticMarkup(React.createElement(StudyWorkspace,{lang:'fr'},React.createElement('section',null,'Course'),React.createElement('section',null,'Coach')));assert.ok(workspace.includes('aria-orientation="vertical"'));assert.ok(workspace.includes('course-pane'));assert.ok(workspace.includes('coach-pane'));
 console.log('Passed: formula delimiters/code fences, actual fractions, escaped HTML/unsafe URLs, bounded resizer and both workspace panes.');
+
+for(const content of [String.raw`\frac{1}{2}`,String.raw`\begin{equation}E=mc^2\end{equation}`,String.raw`\begin{align}x&=2\\y&=3\end{align}`,'```text\n\\frac{1}{2}\n```']){
+ const rendered=renderToStaticMarkup(React.createElement(AIMessage,{content}));
+ assert.ok(rendered.includes('katex'),'Formula must be typeset: '+content);
+ assert.ok(!rendered.includes('formula-fallback'));
+}
+assert.equal(messageParts(String.raw`On utilise la relation suivante : \frac{F}{m} pour calculer le résultat.`).filter(p=>p.kind==='math').length,1);
+assert.equal(messageParts('```javascript\nconst x = 1;\n```')[0].kind,'code');
