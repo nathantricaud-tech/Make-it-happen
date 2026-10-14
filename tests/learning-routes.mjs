@@ -24,5 +24,8 @@ response=await ai.POST(new Request('https://example.test/api/ai',{method:'POST',
 assert.equal(response.status,200);assert.equal((await response.json()).content.questions.length,5);assert.equal(calls.length-before,2);
 assert.ok(calls[before+1].messages[0].content.length<calls[before].messages[0].content.length);
 assert.ok(calls[before].messages[0].content.length<10000);
+course='Bei der Photosynthese wandeln Pflanzen Wasser und Kohlenstoffdioxid mithilfe von Sonnenlicht in Glucose und Sauerstoff um. Dieser Vorgang findet in den Chloroplasten statt. Das Chlorophyll nimmt die Lichtenergie auf und ermöglicht den Aufbau energiereicher organischer Stoffe.';
+queue=[quiz];response=await ai.POST(new Request('https://example.test/api/ai',{method:'POST',body:JSON.stringify({mode:'quiz',lang:'fr',courseId:'course'})}));assert.equal((await response.json()).language,'de');assert.match(calls.at(-1).messages[0].content,/OUTPUT LANGUAGE: Deutsch/);assert.equal(JSON.parse(saved.at(-1)[3]).lang,'de');
+queue=[quiz];response=await ai.POST(new Request('https://example.test/api/ai',{method:'POST',body:JSON.stringify({mode:'quiz',lang:'fr',outputLanguage:'es',courseId:'course'})}));assert.equal((await response.json()).language,'es');assert.match(calls.at(-1).messages[0].content,/OUTPUT LANGUAGE: español/);
 }finally{globalThis.fetch=originalFetch}
 console.log('Passed: generation route repairs language, validates output and respects exam settings.');

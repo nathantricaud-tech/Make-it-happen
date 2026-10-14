@@ -29,3 +29,17 @@ export function courseContext(text:string,max=8000){
  });
  return (notice+excerpts.join('\n\n')).slice(0,max);
 }
+
+export function detectCourseLanguage(text:string,fallback:Lang):Lang{
+ const clean=text.replace(/\$[^$]*\$/g,' ').replace(/\\[a-zA-Z]+|[0-9_={}<>^+*/]/g,' ');
+ if(clean.trim().length<80)return fallback;
+ const votes:Partial<Record<Lang,number>>={};
+ for(let i=0;i<5;i++){
+  const start=Math.floor(i*Math.max(0,clean.length-1800)/4);
+  const top=francAll(clean.slice(start,start+1800),{minLength:80})[0]?.[0];
+  const lang=(Object.keys(iso) as Lang[]).find(k=>iso[k]===top);
+  if(lang)votes[lang]=(votes[lang]||0)+1;
+ }
+ const winner=(Object.entries(votes) as [Lang,number][]).sort((a,b)=>b[1]-a[1])[0];
+ return winner&&winner[1]>=3?winner[0]:fallback;
+}

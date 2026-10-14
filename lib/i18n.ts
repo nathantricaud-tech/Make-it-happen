@@ -1,6 +1,10 @@
 export type Lang='fr'|'en'|'de'|'es';
 export const locales={fr:'fr-FR',en:'en-GB',de:'de-DE',es:'es-ES'};
 const rows:Record<string,string[]>={
+responseLanguage:['Langue des réponses IA','AI response language','Sprache der KI-Antworten','Idioma de las respuestas de IA'],
+documentLanguage:['Automatique · langue du document','Automatic · document language','Automatisch · Dokumentsprache','Automático · idioma del documento'],
+resources:['Ressources','Resources','Lernressourcen','Recursos'],
+
 largeCourseInfo:['Cours volumineux : l’IA travaille sur des extraits répartis dans le document. Sépare les chapitres pour obtenir une fiche ou un sujet plus ciblé.','Large course: AI uses excerpts from across the document. Split chapters for a more focused study guide or exam.','Umfangreicher Kurs: Die KI nutzt Auszüge aus dem gesamten Dokument. Trenne Kapitel für gezieltere Lernzettel und Prüfungen.','Curso extenso: la IA usa extractos de distintas partes del documento. Separa capítulos para obtener fichas o exámenes más precisos.'],
 calculator:["Calculatrice", "Calculator", "Rechner", "Calculadora"],
 workspace:["MON ESPACE", "MY WORKSPACE", "MEIN LERNRAUM", "MI ESPACIO"],

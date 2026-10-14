@@ -1,6 +1,7 @@
 export type GraphParameters={a:number;b:number;c:number};
 type Node={type:'number';value:number}|{type:'variable';name:string}|{type:'unary';sign:string;child:Node}|{type:'binary';operator:string;left:Node;right:Node}|{type:'function';name:string;args:Node[]};
-const functions:Record<string,(...args:number[])=>number>={sin:Math.sin,cos:Math.cos,tan:Math.tan,asin:Math.asin,acos:Math.acos,atan:Math.atan,sqrt:Math.sqrt,abs:Math.abs,exp:Math.exp,ln:Math.log,log:Math.log10,floor:Math.floor,ceil:Math.ceil,min:Math.min,max:Math.max};
+function factorial(n:number){if(!Number.isInteger(n)||n<0||n>170)return NaN;let result=1;for(let i=2;i<=n;i++)result*=i;return result;}
+const functions:Record<string,(...args:number[])=>number>={fact:factorial,cbrt:Math.cbrt,sinh:Math.sinh,cosh:Math.cosh,tanh:Math.tanh,sin:Math.sin,cos:Math.cos,tan:Math.tan,asin:Math.asin,acos:Math.acos,atan:Math.atan,sqrt:Math.sqrt,abs:Math.abs,exp:Math.exp,ln:Math.log,log:Math.log10,floor:Math.floor,ceil:Math.ceil,min:Math.min,max:Math.max};
 export function compileGraph(input:string){
  const normalized=input.trim().replace(/^\s*(?:y|f\(x\))\s*=\s*/i,'').replace(/π/g,'pi').replace(/[×·]/g,'*').replace(/÷/g,'/').replace(/[−–]/g,'-').replace(/²/g,'^2').replace(/³/g,'^3').toLowerCase();
  if(!normalized||normalized.length>300)throw new Error('GRAPH_SYNTAX');

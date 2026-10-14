@@ -1,0 +1,1478 @@
+[
+  {
+    "id": "r1",
+    "name": "Lumni",
+    "url": "https://www.lumni.fr/",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "video",
+      "exercise"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r2",
+    "name": "Sésamath — manuels",
+    "url": "https://manuel.sesamath.net/",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "math"
+    ],
+    "formats": [
+      "book",
+      "exercise"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r3",
+    "name": "MathALÉA",
+    "url": "https://mathalea.fr/",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "math"
+    ],
+    "formats": [
+      "generator",
+      "exercise"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r4",
+    "name": "Exo7",
+    "url": "https://exo7.emath.fr/",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "math"
+    ],
+    "formats": [
+      "course",
+      "exercise",
+      "video"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r5",
+    "name": "Bibm@th",
+    "url": "https://www.bibmath.net/ressources/index.php?action=affiche&quoi=bde%2Findex",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "math"
+    ],
+    "formats": [
+      "exercise",
+      "course"
+    ],
+    "access": "free"
+  },
+  {
+    "id": "r6",
+    "name": "WIMS",
+    "url": "https://wims.univ-cotedazur.fr/wims/",
+    "languages": [
+      "fr",
+      "en",
+      "de",
+      "es"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "math",
+      "science",
+      "languages"
+    ],
+    "formats": [
+      "generator",
+      "exercise"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r7",
+    "name": "Unisciel",
+    "url": "https://www.unisciel.fr/",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "science",
+      "math"
+    ],
+    "formats": [
+      "course",
+      "video"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r8",
+    "name": "Canal-U",
+    "url": "https://www.canal-u.tv/",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "talk",
+      "video"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r9",
+    "name": "Collège de France",
+    "url": "https://www.college-de-france.fr/fr/audios-videos",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "talk",
+      "course"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r10",
+    "name": "Gallica — BnF",
+    "url": "https://gallica.bnf.fr/html/und/livres/livres",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "humanities"
+    ],
+    "formats": [
+      "book"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r11",
+    "name": "Wikisource — français",
+    "url": "https://fr.wikisource.org/",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "humanities"
+    ],
+    "formats": [
+      "book"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r12",
+    "name": "TV5MONDE — apprendre",
+    "url": "https://apprendre.tv5monde.com/fr",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "languages"
+    ],
+    "formats": [
+      "video",
+      "exercise"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r13",
+    "name": "RFI — français facile",
+    "url": "https://francaisfacile.rfi.fr/fr/",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "languages"
+    ],
+    "formats": [
+      "course",
+      "exercise"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r14",
+    "name": "Maths et tiques",
+    "url": "https://www.maths-et-tiques.fr/",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "math"
+    ],
+    "formats": [
+      "course",
+      "video",
+      "exercise"
+    ],
+    "access": "free"
+  },
+  {
+    "id": "r15",
+    "name": "FUN MOOC",
+    "url": "https://www.fun-mooc.fr/fr/cours/",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "course"
+    ],
+    "access": "certificate"
+  },
+  {
+    "id": "r16",
+    "name": "Wikiversité",
+    "url": "https://fr.wikiversity.org/",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "course"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r17",
+    "name": "Khan Academy — français",
+    "url": "https://fr.khanacademy.org/",
+    "languages": [
+      "fr"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "math",
+      "science"
+    ],
+    "formats": [
+      "course",
+      "video",
+      "exercise"
+    ],
+    "access": "optional"
+  },
+  {
+    "id": "r18",
+    "name": "Khan Academy",
+    "url": "https://www.khanacademy.org/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "course",
+      "video",
+      "exercise"
+    ],
+    "access": "optional"
+  },
+  {
+    "id": "r19",
+    "name": "OpenStax",
+    "url": "https://openstax.org/subjects",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "science",
+      "math",
+      "humanities"
+    ],
+    "formats": [
+      "book"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r20",
+    "name": "MIT OpenCourseWare",
+    "url": "https://ocw.mit.edu/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "university"
+    ],
+    "subjects": [
+      "science",
+      "math",
+      "cs",
+      "humanities"
+    ],
+    "formats": [
+      "course",
+      "talk",
+      "exercise"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r21",
+    "name": "OpenLearn",
+    "url": "https://www.open.edu/openlearn/free-courses",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "course"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r22",
+    "name": "Harvard CS50",
+    "url": "https://cs50.harvard.edu/x/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "cs"
+    ],
+    "formats": [
+      "course",
+      "video",
+      "exercise"
+    ],
+    "access": "certificate"
+  },
+  {
+    "id": "r23",
+    "name": "freeCodeCamp",
+    "url": "https://www.freecodecamp.org/learn/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "cs"
+    ],
+    "formats": [
+      "course",
+      "exercise"
+    ],
+    "access": "account"
+  },
+  {
+    "id": "r24",
+    "name": "Project Gutenberg",
+    "url": "https://www.gutenberg.org/",
+    "languages": [
+      "en",
+      "fr",
+      "de",
+      "es"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "humanities"
+    ],
+    "formats": [
+      "book"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r25",
+    "name": "LibreTexts",
+    "url": "https://libretexts.org/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "science",
+      "math",
+      "humanities"
+    ],
+    "formats": [
+      "book"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r26",
+    "name": "OER Commons",
+    "url": "https://www.oercommons.org/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "book",
+      "course"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r27",
+    "name": "Open Yale Courses",
+    "url": "https://oyc.yale.edu/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "university"
+    ],
+    "subjects": [
+      "science",
+      "humanities"
+    ],
+    "formats": [
+      "course",
+      "talk"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r28",
+    "name": "NRICH — Cambridge",
+    "url": "https://nrich.maths.org/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "math"
+    ],
+    "formats": [
+      "exercise"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r29",
+    "name": "Mathigon",
+    "url": "https://mathigon.org/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "math"
+    ],
+    "formats": [
+      "interactive",
+      "course"
+    ],
+    "access": "free"
+  },
+  {
+    "id": "r30",
+    "name": "Corbettmaths",
+    "url": "https://corbettmaths.com/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "math"
+    ],
+    "formats": [
+      "exercise",
+      "video"
+    ],
+    "access": "optional"
+  },
+  {
+    "id": "r31",
+    "name": "The Physics Classroom",
+    "url": "https://www.physicsclassroom.com/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "high"
+    ],
+    "subjects": [
+      "science"
+    ],
+    "formats": [
+      "course",
+      "interactive"
+    ],
+    "access": "optional"
+  },
+  {
+    "id": "r32",
+    "name": "British Council — LearnEnglish",
+    "url": "https://learnenglish.britishcouncil.org/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "languages"
+    ],
+    "formats": [
+      "course",
+      "exercise",
+      "video"
+    ],
+    "access": "optional"
+  },
+  {
+    "id": "r33",
+    "name": "BBC Bitesize",
+    "url": "https://www.bbc.co.uk/bitesize",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "course",
+      "video",
+      "exercise"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r34",
+    "name": "NASA Science",
+    "url": "https://science.nasa.gov/learn/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "science"
+    ],
+    "formats": [
+      "course",
+      "video"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r35",
+    "name": "TED-Ed",
+    "url": "https://ed.ted.com/",
+    "languages": [
+      "en"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "video"
+    ],
+    "access": "free"
+  },
+  {
+    "id": "r36",
+    "name": "Serlo",
+    "url": "https://de.serlo.org/",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "math",
+      "science",
+      "cs"
+    ],
+    "formats": [
+      "course",
+      "exercise"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r37",
+    "name": "LEIFIphysik",
+    "url": "https://www.leifiphysik.de/",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "science"
+    ],
+    "formats": [
+      "course",
+      "exercise"
+    ],
+    "access": "free"
+  },
+  {
+    "id": "r38",
+    "name": "Planet Schule",
+    "url": "https://www.planet-schule.de/",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "video",
+      "interactive"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r39",
+    "name": "ZUM-Unterrichten",
+    "url": "https://unterrichten.zum.de/",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "course",
+      "exercise"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r40",
+    "name": "ZUM — Deutsch Lernen",
+    "url": "https://deutsch-lernen.zum.de/",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "languages"
+    ],
+    "formats": [
+      "course",
+      "exercise"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r41",
+    "name": "DW — Deutsch lernen",
+    "url": "https://learngerman.dw.com/de/deutsch-lernen/s-9095",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "languages"
+    ],
+    "formats": [
+      "course",
+      "video",
+      "exercise"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r42",
+    "name": "vhs-Lernportal",
+    "url": "https://www.vhs-lernportal.de/wws/home.php",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "languages",
+      "math"
+    ],
+    "formats": [
+      "course",
+      "exercise"
+    ],
+    "access": "account"
+  },
+  {
+    "id": "r43",
+    "name": "OMB+",
+    "url": "https://www.ombplus.de/ombplus/public/index.html",
+    "languages": [
+      "de",
+      "en"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "math"
+    ],
+    "formats": [
+      "course",
+      "exercise"
+    ],
+    "access": "account"
+  },
+  {
+    "id": "r44",
+    "name": "bpb — politische Bildung",
+    "url": "https://www.bpb.de/",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "humanities"
+    ],
+    "formats": [
+      "course",
+      "book"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r45",
+    "name": "segu Geschichte",
+    "url": "https://segu-geschichte.de/",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "humanities"
+    ],
+    "formats": [
+      "course",
+      "exercise"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r46",
+    "name": "BR — alpha Lernen",
+    "url": "https://www.br.de/alphalernen/index.html",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "video",
+      "course"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r47",
+    "name": "Mathebibel",
+    "url": "https://www.mathebibel.de/",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "math"
+    ],
+    "formats": [
+      "course"
+    ],
+    "access": "optional"
+  },
+  {
+    "id": "r48",
+    "name": "mathe online — Universität Wien",
+    "url": "https://www.mathe-online.at/",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "math"
+    ],
+    "formats": [
+      "course",
+      "interactive"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r49",
+    "name": "MUNDO — Bildungsmediathek",
+    "url": "https://mundo.schule/",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "course",
+      "video",
+      "exercise"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r50",
+    "name": "Wikisource — Deutsch",
+    "url": "https://de.wikisource.org/",
+    "languages": [
+      "de"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "humanities"
+    ],
+    "formats": [
+      "book"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r51",
+    "name": "TIB AV-Portal",
+    "url": "https://av.tib.eu/",
+    "languages": [
+      "de",
+      "en"
+    ],
+    "levels": [
+      "university"
+    ],
+    "subjects": [
+      "science",
+      "cs"
+    ],
+    "formats": [
+      "talk",
+      "video"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r52",
+    "name": "Khan Academy — español",
+    "url": "https://es.khanacademy.org/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "math",
+      "science"
+    ],
+    "formats": [
+      "course",
+      "video",
+      "exercise"
+    ],
+    "access": "optional"
+  },
+  {
+    "id": "r53",
+    "name": "INTEF — recursos educativos",
+    "url": "https://intef.es/recursos-educativos/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "course",
+      "exercise"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r55",
+    "name": "UNAM — recursos educativos",
+    "url": "https://recursoseducativos.unam.mx/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "book",
+      "course",
+      "video"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r56",
+    "name": "UNAM — Portal Académico CCH",
+    "url": "https://portalacademico.cch.unam.mx/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "high"
+    ],
+    "subjects": [
+      "math",
+      "science",
+      "humanities"
+    ],
+    "formats": [
+      "course",
+      "exercise"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r57",
+    "name": "Red Descartes",
+    "url": "https://proyectodescartes.org/uudd/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "math",
+      "science"
+    ],
+    "formats": [
+      "interactive",
+      "exercise"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r58",
+    "name": "Marea Verde — libros",
+    "url": "https://www.apuntesmareaverde.org.es/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "book"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r59",
+    "name": "Biblioteca Virtual Miguel de Cervantes",
+    "url": "https://www.cervantesvirtual.com/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "humanities"
+    ],
+    "formats": [
+      "book"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r60",
+    "name": "BNE Digital — patrimonio y libros",
+    "url": "https://www.bne.es/es/catalogos/biblioteca-digital-hispanica",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "humanities"
+    ],
+    "formats": [
+      "book"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r61",
+    "name": "CONALITEG — libros de texto",
+    "url": "https://libros.conaliteg.gob.mx/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "primary",
+      "secondary"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "book"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r62",
+    "name": "Educ.ar",
+    "url": "https://www.educ.ar/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "course",
+      "video"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r63",
+    "name": "Educarchile",
+    "url": "https://www.educarchile.cl/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "course",
+      "exercise"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r64",
+    "name": "Canal UNED",
+    "url": "https://canal.uned.es/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "talk",
+      "video"
+    ],
+    "access": "public"
+  },
+  {
+    "id": "r65",
+    "name": "UNED Abierta",
+    "url": "https://unedabierta.uned.es/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "university"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "course"
+    ],
+    "access": "certificate"
+  },
+  {
+    "id": "r66",
+    "name": "JulioProfe",
+    "url": "https://julioprofe.net/",
+    "languages": [
+      "es"
+    ],
+    "levels": [
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "math",
+      "science"
+    ],
+    "formats": [
+      "video"
+    ],
+    "access": "free"
+  },
+  {
+    "id": "r67",
+    "name": "PhET — simulations",
+    "url": "https://phet.colorado.edu/",
+    "languages": [
+      "fr",
+      "en",
+      "de",
+      "es"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "science",
+      "math"
+    ],
+    "formats": [
+      "interactive"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r68",
+    "name": "GeoGebra — ressources",
+    "url": "https://www.geogebra.org/materials",
+    "languages": [
+      "fr",
+      "en",
+      "de",
+      "es"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high",
+      "university"
+    ],
+    "subjects": [
+      "math"
+    ],
+    "formats": [
+      "interactive",
+      "exercise"
+    ],
+    "access": "free"
+  },
+  {
+    "id": "r69",
+    "name": "Scratch",
+    "url": "https://scratch.mit.edu/ideas",
+    "languages": [
+      "fr",
+      "en",
+      "de",
+      "es"
+    ],
+    "levels": [
+      "primary",
+      "secondary"
+    ],
+    "subjects": [
+      "cs"
+    ],
+    "formats": [
+      "interactive",
+      "course"
+    ],
+    "access": "open"
+  },
+  {
+    "id": "r70",
+    "name": "LearningApps",
+    "url": "https://learningapps.org/",
+    "languages": [
+      "fr",
+      "en",
+      "de",
+      "es"
+    ],
+    "levels": [
+      "primary",
+      "secondary",
+      "high"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "exercise",
+      "interactive"
+    ],
+    "access": "free"
+  },
+  {
+    "id": "r71",
+    "name": "Vikidia",
+    "url": "https://www.vikidia.org/",
+    "languages": [
+      "fr",
+      "en",
+      "es"
+    ],
+    "levels": [
+      "primary",
+      "secondary"
+    ],
+    "subjects": [
+      "multi"
+    ],
+    "formats": [
+      "course"
+    ],
+    "access": "open"
+  }
+]
