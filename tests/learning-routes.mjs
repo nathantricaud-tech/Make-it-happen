@@ -29,5 +29,6 @@ queue=[quiz];response=await ai.POST(new Request('https://example.test/api/ai',{m
 queue=[quiz];response=await ai.POST(new Request('https://example.test/api/ai',{method:'POST',body:JSON.stringify({mode:'quiz',lang:'fr',outputLanguage:'es',courseId:'course'})}));assert.equal((await response.json()).language,'es');assert.match(calls.at(-1).messages[0].content,/OUTPUT LANGUAGE: español/);
 queue=[Response.json({choices:[{finish_reason:'length',message:{content:''}}]}),quiz];const emptyBefore=calls.length;
 response=await ai.POST(new Request('https://example.test/api/ai',{method:'POST',body:JSON.stringify({mode:'quiz',lang:'fr',courseId:'course'})}));assert.equal(response.status,200);assert.equal(calls.length-emptyBefore,2);
+queue=[new Response('',{status:400}),quiz];const fallbackBefore=calls.length;response=await ai.POST(new Request('https://example.test/api/ai',{method:'POST',body:JSON.stringify({mode:'quiz',lang:'fr',courseId:'course'})}));assert.equal(response.status,200);assert.equal(calls[fallbackBefore+1].response_format.type,'json_object');
 }finally{globalThis.fetch=originalFetch}
 console.log('Passed: generation route repairs language, validates output and respects exam settings.');
