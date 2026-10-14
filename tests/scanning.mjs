@@ -1,14 +1,16 @@
 import assert from 'node:assert/strict';
 import ts from 'typescript';
 import fs from 'node:fs';
+import * as limits from '../lib/import-limits.ts';
 let destroys=0,renders=0,recognizes=0,terminates=0,blank=false;
 const pdf={numPages:2,async getPage(n){return {async getTextContent(){return {items:n===1?[{str:'A complete printed lesson about dilution and concentration.',hasEOL:true}]:[]}},getViewport(){return {width:500,height:700}},render(){renders++;return {promise:Promise.resolve()}},cleanup(){}}}};
-const modules={'pdfjs-dist':{GlobalWorkerOptions:{},getDocument(){return {promise:Promise.resolve(pdf),async destroy(){destroys++}}}},'tesseract.js':{async createWorker(){return {async recognize(){recognizes++;return {data:{text:blank?'':'Recognised scanned lesson'}}},async terminate(){terminates++}}}}};
+const modules={'./import-limits':limits,'./course-image':{prepareCourseImage:async file=>file},'pdfjs-dist':{GlobalWorkerOptions:{},getDocument(){return {promise:Promise.resolve(pdf),async destroy(){destroys++}}}},'tesseract.js':{async createWorker(){return {async recognize(){recognizes++;return {data:{text:blank?'':'Recognised scanned lesson'}}},async terminate(){terminates++}}}}};
 const compiled=ts.transpileModule(fs.readFileSync(new URL('../lib/scan-course.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
 const out={exports:{}};new Function('require','exports','module',compiled)(name=>modules[name],out.exports,out);
 globalThis.document={createElement(){return {getContext(){return {}}}}};
 const progress=[];const result=await out.exports.scanCourse(new File(['fake'],'lesson.pdf',{type:'application/pdf'}),'fr',n=>progress.push(n));
 assert.match(result.text,/printed lesson/);assert.match(result.text,/scanned lesson/);assert.equal(renders,1);assert.equal(recognizes,1);assert.equal(destroys,1);assert.equal(terminates,1);assert.deepEqual(progress,[50,100]);
-pdf.numPages=31;await assert.rejects(out.exports.scanCourse(new File(['fake'],'large.pdf'),'fr',()=>{}),/SCAN_PAGES/);assert.equal(destroys,2);
+pdf.numPages=151;await assert.rejects(out.exports.scanCourse(new File(['fake'],'large.pdf'),'fr',()=>{}),/SCAN_PAGES/);assert.equal(destroys,2);
 blank=true;await assert.rejects(out.exports.scanCourse(new File(['fake'],'blank.jpg'),'fr',()=>{}),/SCAN_EMPTY/);assert.equal(terminates,2);
+blank=false;pdf.numPages=80;const long=await out.exports.scanCourse(new File(['fake'],'80-pages.pdf'),'fr',()=>{});assert.match(long.text,/\[80\]/);assert.equal(destroys,3);
 console.log('Passed: text + scanned PDF paths, OCR only when needed, progress, page limit, empty scan and cleanup.');
