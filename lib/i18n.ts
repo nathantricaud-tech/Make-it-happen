@@ -1,6 +1,14 @@
 export type Lang='fr'|'en'|'de'|'es';
 export const locales={fr:'fr-FR',en:'en-GB',de:'de-DE',es:'es-ES'};
 const rows:Record<string,string[]>={
+recordLanguage:["Langue parlée (pour plus de précision)", "Spoken language (for better accuracy)", "Gesprochene Sprache (für mehr Genauigkeit)", "Idioma hablado (para mayor precisión)"],
+recordAuto:["Détection automatique", "Automatic detection", "Automatische Erkennung", "Detección automática"],
+recordContext:["Vocabulaire du cours · facultatif", "Course vocabulary · optional", "Fachbegriffe · optional", "Vocabulario del curso · opcional"],
+recordContextHelp:["Ex. : titrage, acide éthanoïque, équivalence", "E.g. titration, ethanoic acid, equivalence", "Z. B. Titration, Ethansäure, Äquivalenz", "Ej.: valoración, ácido etanoico, equivalencia"],
+recordLimit:["15 minutes maximum par prise. Vérifie le son avant de transcrire.", "Up to 15 minutes per recording. Check the audio before transcribing.", "Maximal 15 Minuten pro Aufnahme. Prüfe den Ton vor der Transkription.", "Máximo 15 minutos por grabación. Comprueba el audio antes de transcribir."],
+transcribingAudio:["Transcription en cours…", "Transcribing…", "Transkription läuft…", "Transcribiendo…"],
+audioUncertain:["Certains passages semblent peu audibles. Réécoute et corrige le texte avant de l’utiliser comme cours.", "Some passages may be unclear. Listen again and check the text before saving it as a course.", "Einige Stellen sind möglicherweise unklar. Höre sie erneut an und prüfe den Text vor dem Speichern.", "Algunos pasajes pueden ser poco claros. Escucha de nuevo y revisa el texto antes de guardarlo."],
+
 responseLanguage:['Langue des réponses IA','AI response language','Sprache der KI-Antworten','Idioma de las respuestas de IA'],
 documentLanguage:['Automatique · langue du document','Automatic · document language','Automatisch · Dokumentsprache','Automático · idioma del documento'],
 resources:['Ressources','Resources','Lernressourcen','Recursos'],
