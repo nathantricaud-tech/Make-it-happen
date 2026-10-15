@@ -32,3 +32,5 @@ response=await ai.POST(new Request('https://example.test/api/ai',{method:'POST',
 queue=[new Response('',{status:400}),quiz];const fallbackBefore=calls.length;response=await ai.POST(new Request('https://example.test/api/ai',{method:'POST',body:JSON.stringify({mode:'quiz',lang:'fr',courseId:'course'})}));assert.equal(response.status,200);assert.equal(calls[fallbackBefore+1].response_format.type,'json_object');
 }finally{globalThis.fetch=originalFetch}
 console.log('Passed: generation route repairs language, validates output and respects exam settings.');
+
+const longText='Introduction générale. '.repeat(600)+'\nLa constante de Kohlrausch relie la conductivité aux concentrations ioniques.\n'+'Autres sujets. '.repeat(2000);const focused=generation.focusedCourseContext(longText,'Explique Kohlrausch');assert.ok(focused.length<=8000);assert.match(focused,/Kohlrausch/);

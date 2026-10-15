@@ -19,5 +19,5 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
-      - run: node tests/email-auth.mjs && node tests/password-reset.mjs && node tests/database.mjs && node tests/vercel-files.mjs && node tests/free-access.mjs && node tests/learning-routes.mjs && node tests/message-workspace.mjs && node tests/learning-upgrade.mjs && node tests/new-learning-tools.mjs && node tests/language-api.mjs && node tests/audio-transcription.mjs
+      - run: node tests/email-auth.mjs && node tests/password-reset.mjs && node tests/database.mjs && node tests/vercel-files.mjs && node tests/free-access.mjs && node tests/learning-routes.mjs && node tests/message-workspace.mjs && node tests/learning-upgrade.mjs && node tests/new-learning-tools.mjs && node tests/language-api.mjs && node tests/audio-transcription.mjs && node tests/progress.mjs && node tests/scanning.mjs && node tests/readability.mjs
       - run: pnpm build

@@ -15,4 +15,4 @@ export function progress(records:StudyRecord[],today:string){
 }
 export type Highlight={start:number;end:number;color:'graphite'|'yellow'|'sage'};
 export function validHighlights(value:unknown,text:string):Highlight[]{return Array.isArray(value)?value.filter((h:any)=>h&&Number.isInteger(h.start)&&Number.isInteger(h.end)&&h.start>=0&&h.end>h.start&&h.end<=text.length&&['graphite','yellow','sage'].includes(h.color)).slice(0,500).sort((a,b)=>a.start-b.start).reduce((out:Highlight[],h:Highlight)=>{if(!out.length||h.start>=out[out.length-1].end)out.push(h);return out;},[]):[];}
-export function addHighlight(marks:Highlight[],mark:Highlight){return [...marks.filter(h=>h.end<=mark.start||h.start>=mark.end),mark].sort((a,b)=>a.start-b.start);}
+export function addHighlight(marks:Highlight[],mark:Highlight){return [...marks.flatMap(h=>{if(h.end<=mark.start||h.start>=mark.end)return [h];const parts:Highlight[]=[];if(h.start<mark.start)parts.push({...h,end:mark.start});if(h.end>mark.end)parts.push({...h,start:mark.end});return parts;}),mark].sort((a,b)=>a.start-b.start);}

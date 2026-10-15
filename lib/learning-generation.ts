@@ -43,3 +43,17 @@ export function detectCourseLanguage(text:string,fallback:Lang):Lang{
  const winner=(Object.entries(votes) as [Lang,number][]).sort((a,b)=>b[1]-a[1])[0];
  return winner&&winner[1]>=3?winner[0]:fallback;
 }
+
+// Keep overview coverage and add query-relevant passages within the same provider budget.
+export function focusedCourseContext(text:string,query:string,max=8000){
+ if(text.length<=max||!query.trim())return courseContext(text,max);
+ const normalize=(s:string)=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+ const stop=new Set('avec dans pour que qui les des une est sont sur par this that what which with from explain explique comment pourquoi how why der die das und ein eine ist mit para como que los las del por'.split(' '));
+ const words=[...new Set(normalize(query).match(/[a-z]{3,}/g)||[])].filter(w=>!stop.has(w)).slice(0,24);
+ if(!words.length)return courseContext(text,max);
+ const chunks=[];for(let start=0;start<text.length;start+=900){const value=text.slice(start,start+1100);const normalized=normalize(value);let score=0;for(const word of words){const matches=normalized.split(word).length-1;score+=Math.min(matches,4)}if(score)chunks.push({start,value,score})}
+ const selected=chunks.sort((a,b)=>b.score-a.score||a.start-b.start).slice(0,3).sort((a,b)=>a.start-b.start);
+ if(!selected.length)return courseContext(text,max);
+ const relevant='\n\n[Passages selected for the question; excerpts, not the full document]\n'+selected.map(c=>c.value).join('\n[…]\n');
+ return (courseContext(text,Math.max(1000,max-relevant.length))+relevant).slice(0,max);
+}

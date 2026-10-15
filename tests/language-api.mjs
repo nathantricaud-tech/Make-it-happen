@@ -14,3 +14,7 @@ r=await out.exports.POST(request(true));assert.equal((await r.json()).transcript
 fail=true;r=await out.exports.POST(request());assert.equal((await r.json()).error,'AI_RATE_LIMIT');assert.equal(refunds,1);
 denied=true;const before=calls.length;r=await out.exports.POST(request());assert.equal((await r.json()).error,'UNAUTHORIZED');assert.equal(calls.length,before);
 console.log('Passed: text and audio conversation, single quota reservation per exchange, provider error refund and auth guard.');
+
+denied=false;fail=false;const normalFetch=globalThis.fetch;let attempts=0;
+globalThis.fetch=async(u,o)=>{attempts++;if(attempts===1)return new Response('',{status:400});assert.equal(JSON.parse(o.body).response_format.type,'json_object');return normalFetch(u,o)};
+r=await out.exports.POST(request());assert.equal(r.status,200);assert.equal(attempts,2);

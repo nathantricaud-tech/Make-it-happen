@@ -1,0 +1,5 @@
+'use client';
+import {useEffect,useState} from 'react';
+import type {Lang} from '@/lib/i18n';
+const labels={fr:['Ton assistant travaille…','Préparation de la réponse','La génération continue, garde cette page ouverte.'],en:['Your assistant is working…','Preparing your response','Still generating — keep this page open.'],de:['Dein Assistent arbeitet…','Die Antwort wird vorbereitet','Die Erstellung läuft weiter. Lass diese Seite offen.'],es:['Tu asistente está trabajando…','Preparando la respuesta','La generación continúa. Mantén esta página abierta.']};
+export default function GenerationStatus({lang,floating=false}:{lang:Lang;floating?:boolean}){const [elapsed,setElapsed]=useState(0);useEffect(()=>{const start=Date.now();const timer=setInterval(()=>setElapsed(Math.floor((Date.now()-start)/1000)),1000);return()=>clearInterval(timer)},[]);const w=labels[lang];return <div className={'generation-status'+(floating?' generation-status-floating':'')} role="status"><span className="generation-dots" aria-hidden="true"><i/><i/><i/></span><div><strong>{w[0]}</strong><p>{elapsed<20?w[1]:w[2]} <span aria-hidden="true">· {elapsed}s</span></p></div></div>}
