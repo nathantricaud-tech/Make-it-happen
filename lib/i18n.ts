@@ -1,6 +1,14 @@
 export type Lang='fr'|'en'|'de'|'es';
 export const locales={fr:'fr-FR',en:'en-GB',de:'de-DE',es:'es-ES'};
 const rows:Record<string,string[]>={
+sheetFullscreen:['Plein écran','Full screen','Vollbild','Pantalla completa'],
+zoomIn:['Agrandir le texte','Zoom in','Vergrößern','Ampliar'],
+zoomOut:['Réduire le texte','Zoom out','Verkleinern','Reducir'],
+resetZoom:['Réinitialiser le zoom','Reset zoom','Zoom zurücksetzen','Restablecer zoom'],
+examConstructed:['Document pédagogique créé pour cet exercice · données simulées ou contexte fictif','Teaching document created for this exercise · simulated data or fictional context','Für diese Aufgabe erstelltes Lernmaterial · simulierte Daten oder fiktiver Kontext','Documento didáctico creado para este ejercicio · datos simulados o contexto ficticio'],
+examCourseDocument:['Document adapté du cours fourni','Document adapted from the supplied course','Aus dem bereitgestellten Kurs adaptiertes Material','Documento adaptado del curso proporcionado'],
+examNewIntro:['Un devoir sur 20, avec 2 à 3 exercices contextualisés, des documents et 8 à 12 questions selon la durée. Choisis Approfondissement pour davantage de raisonnement.','A 20-point exam with 2–3 contextual exercises, documents and 8–12 questions depending on duration. Choose Challenge for deeper reasoning.','Eine Prüfung mit 20 Punkten, 2–3 kontextbezogenen Aufgaben, Materialien und 8–12 Fragen je nach Dauer. Wähle Anspruchsvoll für vertieftes Denken.','Un examen de 20 puntos con 2–3 ejercicios contextualizados, documentos y 8–12 preguntas según la duración. Elige Avanzado para profundizar el razonamiento.'],
+
 audioSizeLimit:['Fichier audio : 20 Mo maximum.','Audio file: up to 20 MB.','Audiodatei: maximal 20 MB.','Archivo de audio: máximo 20 MB.'],
 recordLanguage:["Langue parlée (pour plus de précision)", "Spoken language (for better accuracy)", "Gesprochene Sprache (für mehr Genauigkeit)", "Idioma hablado (para mayor precisión)"],
 recordAuto:["Détection automatique", "Automatic detection", "Automatische Erkennung", "Detección automática"],
