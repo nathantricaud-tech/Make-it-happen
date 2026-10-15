@@ -5,7 +5,14 @@ import {compileGraph} from '../lib/graph-math.ts';
 import {detectCourseLanguage} from '../lib/learning-generation.ts';
 const out={exports:{}};
 new Function('require','exports','module',ts.transpileModule(fs.readFileSync('lib/scientific-math.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText)(()=>({compileGraph}),out.exports,out);
-const {calculate}=out.exports;
+const {calculate,scientificDisplay}=out.exports;
+for(const expression of ['6.02E23','6,02×10^23','6,02 × 10²³'])assert.ok(Math.abs(calculate(expression)/6.02e23-1)<1e-12);
+assert.ok(Math.abs(calculate('1,6×10⁻¹⁹')/1.6e-19-1)<1e-12);
+assert.equal(calculate('2*10^3^2'),2e9);assert.equal(calculate('1/2E3'),0.0005);assert.equal(calculate('1/(2×10^3)'),0.0005);
+assert.equal(calculate('3E-3*2E4'),60);assert.equal(calculate('ans*2',false,1e-19),2e-19);
+assert.equal(calculate('min(1;2)'),1);assert.throws(()=>calculate('1E309'));
+assert.deepEqual(scientificDisplay(6.02e23),{mantissa:'6.02',exponent:23});assert.deepEqual(scientificDisplay(0,true),{mantissa:'0',exponent:0});
+
 assert.equal(calculate('sqrt(25)+3^2'),14);assert.ok(Math.abs(calculate('sin(30)',true)-.5)<1e-12);assert.ok(Math.abs(calculate('sin(pi/2)')-1)<1e-12);assert.equal(calculate('log(100)'),2);assert.equal(calculate('fact(5)'),120);assert.equal(calculate('200*10%'),20);assert.equal(calculate('ans*2',false,7),14);assert.equal(calculate('-2^2'),-4);assert.equal(calculate('2^3^2'),512);assert.throws(()=>calculate('1/0'));assert.throws(()=>calculate('sqrt(-1)'));assert.throws(()=>calculate('fact(-2)'));assert.throws(()=>calculate('window.alert(1)'));assert.throws(()=>calculate('x+1'));
 const courses={en:'Photosynthesis is the process by which plants use sunlight to transform water and carbon dioxide into glucose and oxygen. The chloroplasts contain chlorophyll, a pigment that absorbs light. This process supports most food chains and stores energy in organic molecules.',de:'Bei der Photosynthese wandeln Pflanzen Wasser und Kohlenstoffdioxid mithilfe von Sonnenlicht in Glucose und Sauerstoff um. Dieser Vorgang findet in den Chloroplasten statt. Das Chlorophyll nimmt die Lichtenergie auf und ermöglicht den Aufbau energiereicher organischer Stoffe.',es:'La fotosíntesis es el proceso mediante el cual las plantas transforman el agua y el dióxido de carbono en glucosa y oxígeno utilizando la energía de la luz solar. Los cloroplastos contienen clorofila, un pigmento que absorbe la luz y permite almacenar energía.',fr:'La photosynthèse est le processus par lequel les plantes transforment l’eau et le dioxyde de carbone en glucose et en dioxygène grâce à la lumière du soleil. Les chloroplastes contiennent de la chlorophylle, un pigment qui absorbe la lumière et permet de stocker de l’énergie.'};
 for(const [lang,text]of Object.entries(courses))assert.equal(detectCourseLanguage(text,'fr'),lang);assert.equal(detectCourseLanguage('F = ma','de'),'de');
