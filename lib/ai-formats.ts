@@ -10,7 +10,7 @@ export const examSchema=z.object({title:z.string().min(1),instructions:z.string(
  if(exam.exercises){const ids=exam.exercises.map(e=>e.id);if(new Set(ids).size!==ids.length||exam.questions.length<8||exam.questions.some(q=>!ids.includes(q.exerciseId||''))||ids.some(id=>exam.questions.filter(q=>q.exerciseId===id).length<2))ctx.addIssue({code:'custom',message:'Invalid exercise/question mapping'});}
 });
 export function validateExamGrounding(exam:z.infer<typeof examSchema>,course:string,duration=exam.duration){
- const normalize=(s:string)=>s.normalize('NFKC').replace(/\s+/g,' ').trim().toLowerCase();
+ const normalize=(s:string)=>s.normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]/gu,'');
  if(exam.questions.length!==({30:8,60:10,90:12} as Record<number,number>)[duration]||exam.exercises?.length!==(duration===30?2:3))throw new Error('AI_FORMAT',{cause:'Expected '+(duration===30?'2 exercises and 8 questions':duration===60?'3 exercises and 10 questions':'3 exercises and 12 questions')});
  if(!exam.exercises||exam.exercises.some(e=>!normalize(course).includes(normalize(e.sourceQuote))))throw new Error('AI_FORMAT',{cause:'Copy sourceQuote exactly from COURSE DATA, without rewording or changing punctuation.'});
  // An adapted document is not a verbatim source: never label invented measurements as course material.
