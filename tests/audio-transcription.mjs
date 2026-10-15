@@ -10,6 +10,8 @@ try{
 let r=await request();assert.equal(r.status,200);assert.equal(submitted.get('language'),'fr');assert.equal(submitted.get('model'),'whisper-large-v3');assert.equal(submitted.get('response_format'),'verbose_json');assert.equal(submitted.get('prompt'),'titrage, équivalence');assert.equal((await r.json()).uncertain,false);
 result={text:'Passage peu audible',segments:[{avg_logprob:-1.5}]};r=await request('auto');assert.equal(submitted.has('language'),false);assert.equal((await r.json()).uncertain,true);
 result={text:'  '};r=await request();assert.equal((await r.json()).error,'AUDIO_EMPTY');assert.equal(refunded,1);
-r=await request('invalid');assert.equal((await r.json()).error,'INVALID');assert.equal(reserved,3);
+result={text:'Invented sentence',segments:[{text:'Invented sentence',no_speech_prob:0.97,avg_logprob:-1.4}]};r=await request();assert.equal((await r.json()).error,'AUDIO_EMPTY');assert.equal(refunded,2);
+result={text:'Hello fake outro',segments:[{text:'Hello',no_speech_prob:0.01,avg_logprob:-0.1},{text:'fake outro',no_speech_prob:0.98,avg_logprob:-1.5}]};r=await request();const filtered=await r.json();assert.equal(filtered.text,'Hello');assert.equal(filtered.uncertain,true);
+r=await request('invalid');assert.equal((await r.json()).error,'INVALID');assert.equal(reserved,5);
 console.log('Passed: transcription language, vocabulary, quality metadata, empty output refund and validation.');
 }finally{globalThis.fetch=previous}

@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {openMicrophone,signalRms,silentCapture} from '../lib/microphone.ts';
+assert.equal(signalRms(new Float32Array(100)),0);
+assert.equal(silentCapture(20,0),true);
+assert.equal(silentCapture(0,0),false,'An unavailable analyser must not reject audio');
+let requested;await openMicrophone({getUserMedia:async constraints=>{requested=constraints;return {getTracks:()=>[]}}},100,{deviceId:'chosen-device',processing:false});
+assert.equal(requested.audio.deviceId.exact,'chosen-device');assert.equal(requested.audio.noiseSuppression,false);assert.equal(requested.audio.echoCancellation,false);
+assert.ok(Math.abs(signalRms(Float32Array.from({length:1000},(_,i)=>Math.sin(2*Math.PI*i/100)))-Math.SQRT1_2)<1e-6);
+assert.equal(silentCapture(20,.01),false,'Quiet but audible speech must not be rejected');
+console.log('Passed: microphone selection, optional processing, RMS audio level, silence gate and unavailable analyser fallback.');

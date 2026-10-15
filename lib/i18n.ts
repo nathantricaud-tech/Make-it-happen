@@ -1,6 +1,18 @@
 export type Lang='fr'|'en'|'de'|'es';
 export const locales={fr:'fr-FR',en:'en-GB',de:'de-DE',es:'es-ES'};
 const rows:Record<string,string[]>={
+micMuted:['Le microphone est momentanément muet. Vérifie son bouton muet et sa connexion.','The microphone is temporarily muted. Check its mute switch and connection.','Das Mikrofon ist vorübergehend stumm. Prüfe Stummschalter und Verbindung.','El micrófono está temporalmente silenciado. Revisa su botón de silencio y conexión.'],
+micInput:['Microphone','Microphone','Mikrofon','Micrófono'],
+micDefault:['Microphone par défaut','Default microphone','Standardmikrofon','Micrófono predeterminado'],
+micDetect:['Détecter les microphones','Detect microphones','Mikrofone erkennen','Detectar micrófonos'],
+micProcessing:['Réduire le bruit (voix proche du micro)','Reduce noise (voice close to microphone)','Rauschen reduzieren (Stimme nahe am Mikrofon)','Reducir ruido (voz cerca del micrófono)'],
+micSignalDetected:['Un signal sonore est capté.','Audio signal detected.','Audiosignal erkannt.','Se detecta una señal de audio.'],
+micListenCheck:['Parle : la jauge doit bouger. Si elle reste vide, vérifie le micro sélectionné et son bouton muet.','Speak: the meter should move. If it stays empty, check the selected microphone and its mute switch.','Sprich: Die Anzeige sollte sich bewegen. Prüfe sonst das gewählte Mikrofon und dessen Stummschalter.','Habla: el indicador debe moverse. Si no, revisa el micrófono seleccionado y su botón de silencio.'],
+micNoSignal:['Aucun son exploitable capté. Choisis un autre microphone, vérifie son bouton muet et recommence. La transcription est désactivée pour cet enregistrement silencieux.','No usable audio captured. Choose another microphone, check its mute switch and record again. Transcription is disabled for this silent recording.','Kein verwertbarer Ton aufgenommen. Wähle ein anderes Mikrofon, prüfe die Stummschaltung und nimm erneut auf. Die Transkription dieser stillen Aufnahme ist deaktiviert.','No se captó audio utilizable. Elige otro micrófono, revisa el silencio y vuelve a grabar. La transcripción de esta grabación silenciosa está desactivada.'],
+micMeterUnavailable:['Le niveau sonore ne peut pas être mesuré ici. Réécoute ton enregistrement avant de le transcrire.','Audio level cannot be measured here. Listen to the recording before transcribing.','Der Audiopegel kann hier nicht gemessen werden. Höre die Aufnahme vor der Transkription an.','No se puede medir el nivel de audio. Escucha la grabación antes de transcribirla.'],
+micDisconnected:['Le microphone a été déconnecté. La partie déjà enregistrée est conservée.','The microphone disconnected. The recorded portion is retained.','Das Mikrofon wurde getrennt. Der bereits aufgenommene Teil bleibt erhalten.','El micrófono se desconectó. Se conserva la parte grabada.'],
+audioPlaybackError:['Le navigateur ne peut pas lire ce fichier audio. Télécharge-le pour vérifier son contenu ou réenregistre avec un autre microphone.','The browser cannot play this audio. Download it to check its contents or record again with another microphone.','Der Browser kann diese Audiodatei nicht abspielen. Lade sie zur Prüfung herunter oder nimm mit einem anderen Mikrofon auf.','El navegador no puede reproducir este audio. Descárgalo para comprobarlo o graba con otro micrófono.'],
+
 sheetFullscreen:['Plein écran','Full screen','Vollbild','Pantalla completa'],
 zoomIn:['Agrandir le texte','Zoom in','Vergrößern','Ampliar'],
 zoomOut:['Réduire le texte','Zoom out','Verkleinern','Reducir'],
