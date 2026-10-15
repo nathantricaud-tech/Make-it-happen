@@ -13,6 +13,8 @@ export function validateExamGrounding(exam:z.infer<typeof examSchema>,course:str
  const normalize=(s:string)=>s.normalize('NFKC').replace(/\s+/g,' ').trim().toLowerCase();
  if(exam.questions.length!==({30:8,60:10,90:12} as Record<number,number>)[duration]||exam.exercises?.length!==(duration===30?2:3))throw new Error('AI_FORMAT',{cause:'Expected '+(duration===30?'2 exercises and 8 questions':duration===60?'3 exercises and 10 questions':'3 exercises and 12 questions')});
  if(!exam.exercises||exam.exercises.some(e=>!normalize(course).includes(normalize(e.sourceQuote))))throw new Error('AI_FORMAT',{cause:'Copy sourceQuote exactly from COURSE DATA, without rewording or changing punctuation.'});
+ // An adapted document is not a verbatim source: never label invented measurements as course material.
+ for(const exercise of exam.exercises)for(const document of exercise.documents)if(document.origin==='course'&&!normalize(course).includes(normalize(document.content)))document.origin='constructed';
  return exam;
 }
 
